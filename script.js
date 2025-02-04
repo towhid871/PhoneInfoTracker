@@ -1,19 +1,15 @@
-function fetchPhoneInfo() {
+document.getElementById("checkBtn").addEventListener("click", function() {
     let phoneNumber = document.getElementById("phoneInput").value;
-    if (phoneNumber === "") {
-        alert("Please enter a phone number!");
-        return;
-    }
-
-    fetch(`https://your-backend-url.com/phoneinfo?number=${phoneNumber}`)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("result").innerHTML = `
-                <p><strong>Location:</strong> ${data.location}</p>
-                <p><strong>Time Zone:</strong> ${data.timezone}</p>
-                <p><strong>Carrier:</strong> ${data.carrier}</p>
-            `;
-        })
-        .catch(error => console.error("Error fetching data:", error));
-}  
-    
+    fetch(`https://phoneinfobackend.onrender.com/check_number?number=${phoneNumber}`)
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("result").innerHTML = `
+            <p><strong>Number:</strong> ${data.number}</p>
+            <p><strong>Valid:</strong> ${data.valid ? "✅ Yes" : "❌ No"}</p>
+            <p><strong>Carrier:</strong> ${data.carrier}</p>
+            <p><strong>Region:</strong> ${data.region}</p>
+            <p><strong>Time Zone:</strong> ${data.time_zone}</p>
+        `;
+    })
+    .catch(error => console.error("Error fetching data:", error));
+});
